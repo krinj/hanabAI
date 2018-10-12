@@ -12,10 +12,10 @@ public class SimulateHanabi {
         while (count < K_SIMULATION_COUNT) {
             count++;
             Agent[] agents = {
-                    new agents.BasicAgent(),
-                    new agents.BasicAgent(),
-                    new agents.BasicAgent(),
-                    new agents.BasicAgent()};
+                    new agents.MatrixAgent(),
+                    new agents.MatrixAgent(),
+                    new agents.MatrixAgent(),
+                    new agents.MatrixAgent()};
 
             Hanabi game= new Hanabi(agents);
             StringBuffer gameLog = new StringBuffer();
