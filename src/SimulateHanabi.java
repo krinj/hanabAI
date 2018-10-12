@@ -18,7 +18,7 @@ public class SimulateHanabi {
                     new agents.BasicAgent()};
 
             Hanabi game= new Hanabi(agents);
-            StringBuffer gameLog = new StringBuffer("A simple game for three basic agents:\n");
+            StringBuffer gameLog = new StringBuffer();
             int result = game.play(gameLog);
             StringBuffer resultLog = new StringBuffer("Game #")
                     .append(count)
