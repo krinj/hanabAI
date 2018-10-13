@@ -68,6 +68,16 @@ public class CardCounter {
         cardMap = getEmptyMap();
     }
 
+    public void set(Colour colour, int value, int amount)
+    {
+        set(CardUtil.getKey(colour, value), amount);
+    }
+
+    public void set(String key, int amount)
+    {
+        cardMap.put(key, amount);
+    }
+
     public void add(Colour colour, int value, int amount)
     {
         add(CardUtil.getKey(colour, value), amount);

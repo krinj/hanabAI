@@ -5,7 +5,7 @@ public class SimulateHanabi {
     public static void main(String[] args)
     {
         System.out.println("Simulating Hanabi Games...");
-        int K_SIMULATION_COUNT = 1;
+        int K_SIMULATION_COUNT = 500;
         int count = 0;
         int totalScore = 0;
 
@@ -25,12 +25,13 @@ public class SimulateHanabi {
                     .append(" Score: ")
                     .append(result)
                     .append("\n");
+//            System.out.print(gameLog);
             System.out.print(resultLog);
             totalScore += result;
         }
 
         StringBuffer finalResultLog = new StringBuffer("Simulation Complete. Average Score: ")
-                .append(totalScore/K_SIMULATION_COUNT);
+                .append(totalScore/ (float) K_SIMULATION_COUNT);
         System.out.println(finalResultLog);
     }
 }

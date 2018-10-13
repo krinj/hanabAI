@@ -1,6 +1,4 @@
 package agents;
-import hanabAI.Colour;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,6 +6,7 @@ public class CardMatrix {
 
     Map<String, CardStat> stats = new HashMap<>();
     int handIndex = 0;
+    int age = 0;
     float playRatingFactor = 1.0f;
 
     public void add(CardStat stat)

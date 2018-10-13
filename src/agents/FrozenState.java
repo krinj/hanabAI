@@ -6,14 +6,15 @@ class FrozenCard {
 
     Colour colour = null;
     int value = -1;
+    int age = 0;
 
     public boolean sealed = false;
 
     private int valueHintCounter = 0;
     private int colourHintCounter = 0;
 
-    ArrayList<Colour> notColour = new ArrayList<>();
-    ArrayList<Integer> notValue = new ArrayList<>();
+    Set<Colour> notColour = new HashSet<>();
+    Set<Integer> notValue = new HashSet<>();
 
     public void receiveColourHint(Colour colour)
     {
@@ -45,6 +46,16 @@ class FrozenCard {
     public boolean hasReceivedValueHint()
     {
         return valueHintCounter > 0;
+    }
+
+    public Colour getObservedColour()
+    {
+        return hasReceivedColourHint() ? colour : null;
+    }
+
+    public int getObservedValue()
+    {
+        return hasReceivedValueHint() ? value : -1;
     }
 
     public String key()
@@ -93,21 +104,12 @@ class FrozenState {
 
     void reconstruct(State state) throws IllegalActionException {
         // Rebuild the frozen, information rich state from the game state.
-        System.out.println("Reconstructing State");
-        System.out.println(state.getPreviousAction());
-
         originalState = state;
         ArrayList<State> stateList = createStateChain(state);
 
         hands = createHand(state);
         updateActions(stateList, hands);
         calibrateMaps(state);
-
-        for (FrozenCard[] hand : hands) {
-            System.out.println(Arrays.toString(hand));
-        }
-
-        System.out.println();
     }
     
     // ======================================================================================================
@@ -136,14 +138,14 @@ class FrozenState {
         if (value == 5)
             return 0.0f;
 
-        if (isCardPlayable(colour, value))
-            return 0.2f;
-
         if (playableNumberMap.containsKey(colour) && value < playableNumberMap.get(colour))
             return 1.0f;
 
         if (visibleMap.get(CardUtil.getKey(colour, value)) >= 2)
             return 0.5f;
+
+        if (isCardPlayable(colour, value))
+            return 0.0f;
 
         return 0.3f;
     }
@@ -214,7 +216,6 @@ class FrozenState {
             {
                 if (CardUtil.getKey(discardedCard).equals(card.key())) {
                     totalNumber--;
-                    System.out.println(totalNumber);
                 }
 
                 if (totalNumber <= 0)
@@ -283,11 +284,25 @@ class FrozenState {
             if (action == null)
                 continue;
 
+            updateAge(hands);
+
             if (action.getType() == ActionType.HINT_COLOUR || action.getType() == ActionType.HINT_VALUE)
                 updateHint(hands, action);
 
             if (action.getType() == ActionType.DISCARD || action.getType() == ActionType.PLAY)
                 sealCard(hands, action);
+        }
+    }
+
+    private void updateAge(FrozenCard[][] hands)
+    {
+        for (FrozenCard[] hand : hands)
+        {
+            for (FrozenCard card : hand)
+            {
+                if (card != null && !card.sealed)
+                    card.age ++;
+            }
         }
     }
 
