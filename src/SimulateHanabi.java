@@ -1,3 +1,4 @@
+import agents.Agent21789272;
 import hanabAI.Agent;
 import hanabAI.Hanabi;
 
@@ -5,17 +6,17 @@ public class SimulateHanabi {
     public static void main(String[] args)
     {
         System.out.println("Simulating Hanabi Games...");
-        int K_SIMULATION_COUNT = 500;
+        int K_SIMULATION_COUNT = 1;
         int count = 0;
         int totalScore = 0;
 
         while (count < K_SIMULATION_COUNT) {
             count++;
             Agent[] agents = {
-                    new agents.MatrixAgent(),
-                    new agents.MatrixAgent(),
-                    new agents.MatrixAgent(),
-                    new agents.MatrixAgent()};
+                    new Agent21789272(),
+                    new Agent21789272(),
+                    new Agent21789272(),
+                    new Agent21789272()};
 
             Hanabi game= new Hanabi(agents);
             StringBuffer gameLog = new StringBuffer();
@@ -25,7 +26,7 @@ public class SimulateHanabi {
                     .append(" Score: ")
                     .append(result)
                     .append("\n");
-//            System.out.print(gameLog);
+            System.out.print(gameLog);
             System.out.print(resultLog);
             totalScore += result;
         }
