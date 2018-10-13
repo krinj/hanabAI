@@ -48,13 +48,53 @@ public class CardCounter {
         // Return a copy of the empty map, if it already exists.
         return new HashMap<>(_emptyMap);
     }
+    
+    // ======================================================================================================
+    // Static Utility Functions.
+    // ======================================================================================================
+
+    public static CardCounter newDeckCounter() {
+        CardCounter counter = new CardCounter();
+        counter.cardMap = getDeckMap();
+        return counter;
+    }
 
     // ======================================================================================================
     // Class Implementation.
     // ======================================================================================================
+    public Map<String, Integer> cardMap;
 
     public CardCounter() {
-
+        cardMap = getEmptyMap();
     }
 
+    public void add(Colour colour, int value, int amount)
+    {
+        add(CardUtil.getKey(colour, value), amount);
+    }
+
+    public void add(String key, int amount)
+    {
+        cardMap.put(key, cardMap.get(key) + amount);
+    }
+
+    public int count(Colour colour, int value)
+    {
+        return count(CardUtil.getKey(colour, value));
+    }
+
+    public int count(String key)
+    {
+        return cardMap.get(key);
+    }
+
+    public int totalCount()
+    {
+        // Count the total number of cards tracked in this counter.
+        int count = 0;
+        for (String key : cardMap.keySet()) {
+            count += cardMap.get(key);
+        }
+        return count;
+    }
 }

@@ -5,7 +5,7 @@ public class SimulateHanabi {
     public static void main(String[] args)
     {
         System.out.println("Simulating Hanabi Games...");
-        int K_SIMULATION_COUNT = 100;
+        int K_SIMULATION_COUNT = 1;
         int count = 0;
         int totalScore = 0;
 
